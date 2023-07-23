@@ -15,7 +15,6 @@ export function* fetchRouteWorker(
   try {
     const parsedRoutePoints = convertRouteObjectToString(actionPayload.payload)
     const response = yield call(getOSRMGeometry, parsedRoutePoints)
-    console.log(response.request.responseURL)
     yield put(fetchRouteSuccess(response.data.routes[0].geometry))
   } catch (error) {
     yield put(fetchRouteFailure('Ошибка получения маршрута'))
