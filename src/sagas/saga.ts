@@ -7,15 +7,16 @@ import { getOSRMGeometry } from '../services/api.ts'
 import { RoutePointsType } from '../types/types.ts'
 import { Action, PayloadAction } from '@reduxjs/toolkit'
 import { FETCH_ROUTE } from '../store/sagaActions/mapSagaActions.ts'
-import { convertRouteObjectToString } from '../utils/convertRouteObjectToString.ts'
+import { convertRouteObjectToString } from '../utils/convertRouteObject.ts'
 
 export function* fetchRouteWorker(
   actionPayload: PayloadAction<RoutePointsType>
 ) {
   try {
     const parsedRoutePoints = convertRouteObjectToString(actionPayload.payload)
-    const { data } = yield call(getOSRMGeometry, parsedRoutePoints)
-    yield put(fetchRouteSuccess(data.routes[0].geometry.coordinates))
+    const response = yield call(getOSRMGeometry, parsedRoutePoints)
+    console.log(response.request.responseURL)
+    yield put(fetchRouteSuccess(response.data.routes[0].geometry))
   } catch (error) {
     yield put(fetchRouteFailure('Ошибка получения маршрута'))
     throw new Error('Произошла ошибка при выполнении запроса')

@@ -1,2 +1,2 @@
-export type RoutePointType = { lat: number; lng: number }
+export type RoutePointType = { lng: number; lat: number }
 export type RoutePointsType = RoutePointType[]

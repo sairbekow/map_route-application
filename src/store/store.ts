@@ -1,12 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import routeSlice from './slices/mapSlice.ts'
+import mapSlice from './slices/mapSlice.ts'
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from '../sagas/saga.ts'
 
 const sagaMiddleware = createSagaMiddleware()
 
 const rootReducer = combineReducers({
-  map: routeSlice.reducer,
+  map: mapSlice.reducer,
 })
 
 const store = configureStore({

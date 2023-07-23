@@ -1,15 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RoutePointType } from '../../types/types.ts'
+import { routesData } from '../../constants/routesData.ts'
 
 interface IMapState {
-  coordinates: [number, number][] | null
-  currentRoutePoints: RoutePointType[] | null
+  currentSelectedRoutePoints: RoutePointType[]
+  routeGeometry: string | null
   error: string | null
 }
 
 const initialState: IMapState = {
-  coordinates: null,
-  currentRoutePoints: null,
+  currentSelectedRoutePoints: routesData.path1,
+  routeGeometry: null,
   error: null,
 }
 
@@ -17,29 +18,26 @@ const mapSlice = createSlice({
   name: 'map',
   initialState,
   reducers: {
-    fetchRouteSuccess: (
-      state: IMapState,
-      action: PayloadAction<[number, number][]>
-    ) => {
-      state.coordinates = action.payload
+    fetchRouteSuccess: (state: IMapState, action: PayloadAction<string>) => {
+      state.routeGeometry = action.payload
       state.error = null
     },
     fetchRouteFailure: (state: IMapState, action: PayloadAction<string>) => {
       state.error = action.payload
-      state.coordinates = null
+      state.routeGeometry = null
     },
-    setCurrentRoutePoints: (
+    setcurrentSelectedRoutePoints: (
       state: IMapState,
       action: PayloadAction<RoutePointType[]>
     ) => {
-      state.currentRoutePoints = action.payload
+      state.currentSelectedRoutePoints = action.payload
     },
   },
 })
 export const {
   fetchRouteSuccess,
   fetchRouteFailure,
-  setCurrentRoutePoints,
+  setcurrentSelectedRoutePoints,
 } = mapSlice.actions
 
 export default mapSlice
